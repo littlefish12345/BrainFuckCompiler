@@ -4,7 +4,7 @@ A compiler for extended BrainFuck written in cpp.
 # How it works?
 Just simply translate each symbol into assembly. I treat ebf like some kind of IR.
 
-# Useage
+# Usage
 Checkout bfc -h.
 
 # Requirement

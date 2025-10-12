@@ -10,7 +10,7 @@ std::string source_path = "";
 std::string out_path = "a.out";
 target_platform platform = platform_linux_amd64;
 
-const char * help_text = R"(Useage: bfcc [Options] File
+const char * help_text = R"(Usage: bfcc [Options] File
     Options:
         -h            Print help text.
         -a            Output assembly file
