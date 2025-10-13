@@ -5,7 +5,8 @@
 
 std::string strip_source(std::string source) {
     std::stringstream output;
-    for (long long i = 0; i < source.length(); ++i) {
+    long long i = 0;
+    while (i < source.length()) {
         switch (source[i]) {
             case '+': //standard set
             case '-':
@@ -27,9 +28,18 @@ std::string strip_source(std::string source) {
             case '}':
             case '%':
                 output << source[i];
+                ++i;
+                break;
+
+            case '#':
+                while (i < source.length() && source[i] != '\n') {
+                    ++i;
+                }
+                ++i;
                 break;
         
             default:
+                ++i;
                 break;
         }
     }

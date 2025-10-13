@@ -18,8 +18,9 @@ void compile(std::string source_path, std::string out_path, target_platform plat
     ss << source_file.rdbuf();
     std::string source = ss.str();
 
-    int jump_entry_count = grammar_check(source);
     source = strip_source(source);
+    //printf("%s", source.c_str());
+    int jump_entry_count = grammar_check(source);
 
     std::string asm_out_path = out_asm ? out_path : "out.asm";
 
