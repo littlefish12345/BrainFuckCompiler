@@ -19,7 +19,7 @@ void compile(std::string source_path, std::string out_path, target_platform plat
     std::string source = ss.str();
 
     source = strip_source(source);
-    //printf("%s", source.c_str());
+    printf("%s", source.c_str());
     int jump_entry_count = grammar_check(source);
 
     std::string asm_out_path = out_asm ? out_path : "out.asm";

@@ -93,7 +93,7 @@ namespace linux_amd64 {
                     out << "\tmov rsi, [pointer]\n\tmov byte [memory+rsi], 0\n";
                     break;
                 case '^':
-                    out << "\tmov rsi, [pointer]\n\tmov rax, [memory+rsi]\n\tdiv qword [memory_size]\n\tmov [pointer], rdx\n";
+                    out << "\tmov rsi, [pointer]\n\tmovzx rax, byte [memory+rsi]\n\tdiv qword [memory_size]\n\tmov [pointer], rdx\n";
                     break;
                 case '|':
                     out << "\tmov [pointer], 0\n";
@@ -118,7 +118,7 @@ namespace linux_amd64 {
                     out << "\tcmp rsp, [stack_top]\n\tjae ret_error\n\tret\n";
                     break;
                 case '%':
-                    out << "\tmov rsi, [pointer]\n\tmov rax, [memory+rsi]\n\tmov rsi, rax\n\tmov rax, [memory+rsi]\n\tmov rsi, [pointer]\n\tmov [memory+rsi], rax\n";
+                    out << "\tmov rsi, [pointer]\n\tmovzx rax, byte [memory+rsi]\n\tmov rsi, rax\n\tmovzx rax, byte [memory+rsi]\n\tmov rsi, [pointer]\n\tmov byte [memory+rsi], al\n";
                     break;
 
                 default:
