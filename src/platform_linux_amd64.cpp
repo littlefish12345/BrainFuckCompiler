@@ -6,8 +6,8 @@
 
 namespace linux_amd64 {
     void initialize_translate_context(long long memory_size, long long stack_size, int jump_entry_num, std::ofstream &out) {
-        out << "MEMORY_SIZE equ "<< memory_size << "\nSTACK_SIZE equ " << stack_size << "\n";
-        out << "STACK_TOP equ stack+32*8\nJUMP_ENTRY_NUM equ " << jump_entry_num << "\n\n";
+        out << "%define MEMORY_SIZE "<< memory_size << "\n%define STACK_SIZE " << stack_size << "\n";
+        out << "%define STACK_TOP stack+32*8\n%define JUMP_ENTRY_NUM " << jump_entry_num << "\n\n";
         out << "section .bss\n\tmemory resb " << memory_size << "\n\tstack resq " << stack_size << "\n\t";
         out << "term_cfg_org resb 36\n\tterm_cfg_new resb 36\n\n";
         out << "section .data\n\t";
@@ -19,9 +19,9 @@ namespace linux_amd64 {
             out << "\tdq jump_entry_" << i << "\n";
         }
         out << "\nsection .text\n";
-        out << "stack_overflow:\n\tlea rsi, [stack_overflow_msg]\n\tmov rdx, [stack_overflow_msg_len]\n\tjmp common_error_exit\n\n";
-        out << "jump_error:\n\tlea rsi, [jump_error_msg]\n\tmov rdx, [jump_error_msg_len]\n\tjmp common_error_exit\n\n";
-        out << "ret_error:\n\tlea rsi, [ret_error_msg]\n\tmov rdx, [ret_error_msg_len]\n\n";
+        out << "stack_overflow:\n\tlea rsi, [stack_overflow_msg]\n\tmov rdx, stack_overflow_msg_len\n\tjmp common_error_exit\n\n";
+        out << "jump_error:\n\tlea rsi, [jump_error_msg]\n\tmov rdx, jump_error_msg_len\n\tjmp common_error_exit\n\n";
+        out << "ret_error:\n\tlea rsi, [ret_error_msg]\n\tmov rdx, ret_error_msg_len\n\n";
         out << "common_error_exit:\n\tmov eax, 1\n\tmov edi, 1\n\tsyscall\n\n\t";
         out << "mov eax, 16\n\txor rdi, rdi\n\tmov rsi, 0x5402\n\tlea rdx, [term_cfg_org]\n\tsyscall\n\n\t";
         out << "mov eax, 60\n\tmov edi, 1\n\tsyscall\n\n";
